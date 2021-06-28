@@ -1,0 +1,59 @@
+spring:
+  cache:
+    cache-names: user, instructor, student, preferences, vehicle
+    type: redis
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        #generate_statistics: true # logging metrics
+        format_sql: true # sql logging formatting
+    hibernate:
+      ddl-auto: none
+    database: postgresql
+    open-in-view: false
+    #show-sql: true # sql logging
+  flyway:
+    locations: classpath:db/migration
+    schemas: public
+  #security:
+  #  oauth2:
+  #    client:
+  #      registration:
+  #        google:
+  #          client-id: {CLIENT_ID}
+  #          client-secret: {CLIENT_SECRET}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html, text/plain, text/css, application/javascript, application/json
+    min-response-size: 1024
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org:
+      hibernate:
+      #type: trace # logging hibernate
+      #stat: debug

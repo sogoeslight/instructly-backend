@@ -1,0 +1,32 @@
+version: "3.5"
+
+services:
+  #  app:
+  #    image: 'docker-spring-boot-postgres:alpine'
+  #    build:
+  #      context: /build/libs
+  #    container_name: app
+  #    depends_on:
+  #      - db
+  #    environment:
+  #      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/instructly
+  #      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+  #      - SPRING_DATASOURCE_PASSWORD=${DB_PASS}
+  #      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    container_name: postgres_container
+    image: 'postgres:alpine'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: instructly
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    restart: unless-stopped
+
+  cache:
+    container_name: redis_container
+    image: 'redis:alpine'
+    ports:
+      - "6379:6379"

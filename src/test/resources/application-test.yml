@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        generate_statistics: true
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+  flyway:
+    locations: classpath:db/migration
+    schemas: public
+  test:
+    database:
+      replace: none
