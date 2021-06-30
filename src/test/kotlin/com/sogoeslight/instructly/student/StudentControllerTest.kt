@@ -2,24 +2,23 @@ package com.sogoeslight.instructly.student
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jayway.jsonpath.JsonPath
+import com.sogoeslight.instructly.annotations.IntegrationTest
 import com.sogoeslight.instructly.preferences.CalendarDefaultDisplayedWeeks
 import com.sogoeslight.instructly.preferences.Preferences
 import com.sogoeslight.instructly.preferences.Theme
 import com.sogoeslight.instructly.preferences.UILanguage
 import com.sogoeslight.instructly.user.User
 import com.sogoeslight.instructly.user.UserType
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
+import assertk.assertions.isNull
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.*
-import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
@@ -29,11 +28,8 @@ import javax.persistence.EntityManager
 const val ID = "fd7e1b90-31c2-4d68-b5c3-c96233574531"
 const val URL = "/api/v1/students/"
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-@Sql(scripts = ["classpath:populateWithTestData.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-internal class StudentControllerTest @Autowired constructor(
+@IntegrationTest
+internal class StudentControllerTest constructor(
     val mockMvc: MockMvc,
     val em: EntityManager,
     val mapper: ObjectMapper
@@ -185,7 +181,7 @@ internal class StudentControllerTest @Autowired constructor(
             assertThat(preferencesFromDb.theme).isEqualTo(Theme.Light)
             assertThat(preferencesFromDb.uiLanguage).isEqualTo(UILanguage.Latvian)
             assertThat(preferencesFromDb.calendarDefaultDisplayedWeeks).isEqualTo(CalendarDefaultDisplayedWeeks.Two)
-            assertThat(preferencesFromDb.routeTrackingEnabled).isFalse
+            assertThat(preferencesFromDb.routeTrackingEnabled).isFalse()
         }
 
         @Test

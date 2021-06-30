@@ -20,7 +20,10 @@ class StudentService(
     private val preferencesService: PreferencesService
 ) {
 
-    fun getAll(pageable: Pageable): Page<StudentDto> = repository.findAll(pageable).map { it.toDto() }
+    fun getAll(pageable: Pageable): Page<StudentDto> =
+        repository
+            .findAll(pageable)
+            .map(Student::toDto)
 
     @Cacheable(value = ["Student"])
     fun getStudentByUUID(id: UUID): StudentDto =
@@ -69,7 +72,7 @@ class StudentService(
 
 }
 
-fun Student.toDto() = StudentDto(
+private fun Student.toDto() = StudentDto(
     id,
     email,
     userType,

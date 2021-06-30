@@ -37,7 +37,7 @@ class PreferencesService(private val repository: PreferencesRepository) {
 
 }
 
-fun Preferences.toDto() = PreferencesDto(
+private fun Preferences.toDto() = PreferencesDto(
     id,
     theme,
     uiLanguage,

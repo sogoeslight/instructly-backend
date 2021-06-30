@@ -1,22 +1,19 @@
 package com.sogoeslight.instructly.user
 
+import com.sogoeslight.instructly.annotations.IntegrationTest
 import com.sogoeslight.instructly.preferences.Preferences
 import com.sogoeslight.instructly.student.Student
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isNull
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
-import org.springframework.transaction.annotation.Transactional
 import java.math.BigInteger
 import java.util.*
 import javax.persistence.EntityManager
@@ -24,11 +21,8 @@ import javax.persistence.EntityManager
 const val ID = "fd7e1b90-31c2-4d68-b5c3-c96233574531"
 const val URL = "/api/v1/users/"
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-@Sql(scripts = ["classpath:populateWithTestData.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-internal class UserControllerTest @Autowired constructor(
+@IntegrationTest
+internal class UserControllerTest constructor(
     val mockMvc: MockMvc,
     val em: EntityManager
 ) {

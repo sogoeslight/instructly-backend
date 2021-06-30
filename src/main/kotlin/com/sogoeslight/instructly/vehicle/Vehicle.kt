@@ -47,8 +47,8 @@ class Vehicle(
     var model: String = "",
 
     @Column(name = "production_year")
-    @ValidYear
-    var productionYear: Short? = null,
+    @field:ValidYear
+    var productionYear: Int? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gearbox")

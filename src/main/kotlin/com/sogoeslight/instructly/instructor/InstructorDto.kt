@@ -22,7 +22,7 @@ class InstructorDto(
 )
 
 class CreateInstructorDto(
-    val id: UUID,
+    val id: UUID = UUID.randomUUID(),
     val email: String,
     val phoneNumber: String,
     val firstName: String,

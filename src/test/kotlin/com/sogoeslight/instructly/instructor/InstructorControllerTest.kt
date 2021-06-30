@@ -2,6 +2,7 @@ package com.sogoeslight.instructly.instructor
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jayway.jsonpath.JsonPath
+import com.sogoeslight.instructly.annotations.IntegrationTest
 import com.sogoeslight.instructly.preferences.CalendarDefaultDisplayedWeeks
 import com.sogoeslight.instructly.preferences.Preferences
 import com.sogoeslight.instructly.preferences.Theme
@@ -9,18 +10,16 @@ import com.sogoeslight.instructly.preferences.UILanguage
 import com.sogoeslight.instructly.user.User
 import com.sogoeslight.instructly.user.UserType
 import com.sogoeslight.instructly.vehicle.*
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
+import assertk.assertions.isNull
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.*
-import org.springframework.transaction.annotation.Transactional
 import java.math.BigInteger
 import java.util.*
 import javax.persistence.EntityManager
@@ -31,11 +30,8 @@ const val VEHICLE_ID = "fd7e1b90-31c2-4d68-b5c3-c96233574533"
 const val NEW_VEHICLE_ID = "fd7e1b90-31c2-4d68-b5c3-c96233574534"
 const val URL = "/api/v1/instructors/"
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-@Sql(scripts = ["classpath:populateWithTestData.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-internal class InstructorControllerTest @Autowired constructor(
+@IntegrationTest
+internal class InstructorControllerTest constructor(
     val mockMvc: MockMvc,
     val em: EntityManager,
     val mapper: ObjectMapper
@@ -184,7 +180,7 @@ internal class InstructorControllerTest @Autowired constructor(
                 jsonPath("$.vehicles[0].model", equalTo(instructorDto.vehicles[0].model))
                 jsonPath(
                     "$.vehicles[0].productionYear",
-                    equalTo(instructorDto.vehicles[0].productionYear?.toInt())
+                    equalTo(instructorDto.vehicles[0].productionYear)
                 )
                 jsonPath("$.vehicles[0].gearBox", equalTo(instructorDto.vehicles[0].gearBox.toString()))
                 jsonPath("$.vehicles[0].wheelDrive", equalTo(instructorDto.vehicles[0].wheelDrive.toString()))
@@ -225,7 +221,7 @@ internal class InstructorControllerTest @Autowired constructor(
                 jsonPath("$.vehicles[0].regPlate", equalTo(vehicleFromDb.regPlate))
                 jsonPath("$.vehicles[0].manufacturer", equalTo(vehicleFromDb.manufacturer))
                 jsonPath("$.vehicles[0].model", equalTo(vehicleFromDb.model))
-                jsonPath("$.vehicles[0].productionYear", equalTo(vehicleFromDb.productionYear?.toInt()))
+                jsonPath("$.vehicles[0].productionYear", equalTo(vehicleFromDb.productionYear))
                 jsonPath("$.vehicles[0].gearBox", equalTo(vehicleFromDb.gearBox.toString()))
                 jsonPath("$.vehicles[0].wheelDrive", equalTo(vehicleFromDb.wheelDrive.toString()))
             }
@@ -308,7 +304,7 @@ internal class InstructorControllerTest @Autowired constructor(
             assertThat(preferencesFromDb.theme).isEqualTo(Theme.Light)
             assertThat(preferencesFromDb.uiLanguage).isEqualTo(UILanguage.Latvian)
             assertThat(preferencesFromDb.calendarDefaultDisplayedWeeks).isEqualTo(CalendarDefaultDisplayedWeeks.Two)
-            assertThat(preferencesFromDb.routeTrackingEnabled).isFalse
+            assertThat(preferencesFromDb.routeTrackingEnabled).isFalse()
             assertThat(vehiclesFromDb.vehicleCategory).isEqualTo(createInstructorDto.vehicles[0].vehicleCategory)
             assertThat(vehiclesFromDb.regPlate).isEqualTo(createInstructorDto.vehicles[0].regPlate)
             assertThat(vehiclesFromDb.manufacturer).isEqualTo(createInstructorDto.vehicles[0].manufacturer)

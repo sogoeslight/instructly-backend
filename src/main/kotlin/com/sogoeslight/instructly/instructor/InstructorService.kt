@@ -23,7 +23,10 @@ class InstructorService(
     private val repository: InstructorRepository,
     private val preferencesService: PreferencesService,
 ) {
-    fun getAll(pageable: Pageable): Page<InstructorDto> = repository.findAll(pageable).map { it.toDto() }
+    fun getAll(pageable: Pageable): Page<InstructorDto> =
+        repository
+            .findAll(pageable)
+            .map(Instructor::toDto)
 
     @Cacheable(value = ["Instructor"])
     fun getInstructorByUUID(id: UUID): InstructorDto =
@@ -80,7 +83,7 @@ class InstructorService(
 
 }
 
-fun VehicleDto.toEntity(instructor: Instructor) = Vehicle(
+private fun VehicleDto.toEntity(instructor: Instructor) = Vehicle(
     id,
     instructor,
     vehicleCategory,
@@ -92,7 +95,7 @@ fun VehicleDto.toEntity(instructor: Instructor) = Vehicle(
     wheelDrive
 )
 
-fun CreateVehicleDto.toEntity(instructor: Instructor) = Vehicle(
+private fun CreateVehicleDto.toEntity(instructor: Instructor) = Vehicle(
     id,
     instructor,
     vehicleCategory,
@@ -104,7 +107,7 @@ fun CreateVehicleDto.toEntity(instructor: Instructor) = Vehicle(
     wheelDrive
 )
 
-fun InstructorDto.toEntity() = Instructor(
+private fun InstructorDto.toEntity() = Instructor(
     id,
     email,
     userType,
@@ -120,7 +123,7 @@ fun InstructorDto.toEntity() = Instructor(
     emptyList()
 )
 
-fun CreateInstructorDto.toEntity() = Instructor(
+private fun CreateInstructorDto.toEntity() = Instructor(
     id,
     email,
     UserType.Instructor,
@@ -136,7 +139,7 @@ fun CreateInstructorDto.toEntity() = Instructor(
     emptyList()
 )
 
-fun Instructor.toDto() = InstructorDto(
+private fun Instructor.toDto() = InstructorDto(
     id,
     email,
     userType,
@@ -152,7 +155,7 @@ fun Instructor.toDto() = InstructorDto(
     vehicles.map { it.toDto() }
 )
 
-fun Vehicle.toDto() = VehicleDto(
+private fun Vehicle.toDto() = VehicleDto(
     id,
     vehicleCategory,
     regPlate,

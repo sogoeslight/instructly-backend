@@ -15,7 +15,10 @@ import java.util.*
 @CacheConfig(cacheNames = ["User"])
 class UserService(private val repository: UserRepository) {
 
-    fun getAll(pageable: Pageable): Page<UserDto> = repository.findAll(pageable).map { it.toDto() }
+    fun getAll(pageable: Pageable): Page<UserDto> =
+        repository
+            .findAll(pageable)
+            .map(User::toDto)
 
     @Cacheable(value = ["User"])
     fun getUserByUUID(id: UUID): UserDto =
@@ -41,7 +44,7 @@ class UserService(private val repository: UserRepository) {
 
 }
 
-fun User.toDto() = UserDto(
+private fun User.toDto() = UserDto(
     id,
     email,
     userType,

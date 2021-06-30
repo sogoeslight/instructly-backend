@@ -46,16 +46,17 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.vladmihalcea:hibernate-types-52:2.10.2")
-    implementation("org.junit.jupiter:junit-jupiter")
     implementation("org.springdoc:springdoc-openapi-ui:1.5.5")
     implementation("org.springdoc:springdoc-openapi-data-rest:1.5.5")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.5.5")
     implementation("com.github.ben-manes.caffeine:caffeine")
     //developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
+    implementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.json", module = "json")
     }
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.24")
     testImplementation("org.testcontainers:testcontainers:1.15.1")
 }
 

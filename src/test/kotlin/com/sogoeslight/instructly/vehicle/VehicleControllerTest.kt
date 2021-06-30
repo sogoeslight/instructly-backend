@@ -1,21 +1,19 @@
 package com.sogoeslight.instructly.vehicle
 
 import com.jayway.jsonpath.JsonPath
+import com.sogoeslight.instructly.annotations.IntegrationTest
 import com.sogoeslight.instructly.instructor.Instructor
 import com.sogoeslight.instructly.instructor.InstructorDto
 import com.sogoeslight.instructly.user.UserType
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isNull
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.*
-import org.springframework.transaction.annotation.Transactional
 import java.math.BigInteger
 import java.util.*
 import javax.persistence.EntityManager
@@ -25,11 +23,8 @@ const val ID = "fd7e1b90-31c2-4d68-b5c3-c96233574533"
 const val INSTRUCTOR_WO_VEHICLE_ID = "fd7e1b90-31c2-4d68-b5c3-c96233574534"
 const val URL = "/api/v1/vehicles/"
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-@Sql(scripts = ["classpath:populateWithTestData.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-internal class VehicleControllerTest @Autowired constructor(
+@IntegrationTest
+internal class VehicleControllerTest constructor(
     val mockMvc: MockMvc,
     val em: EntityManager
 ) {
@@ -149,7 +144,7 @@ internal class VehicleControllerTest @Autowired constructor(
                 jsonPath("$.regPlate", Matchers.equalTo(vehicleDto.regPlate))
                 jsonPath("$.manufacturer", Matchers.equalTo(vehicleDto.manufacturer))
                 jsonPath("$.model", Matchers.equalTo(vehicleDto.model))
-                jsonPath("$.productionYear", Matchers.equalTo(vehicleDto.productionYear?.toInt()))
+                jsonPath("$.productionYear", Matchers.equalTo(vehicleDto.productionYear))
                 jsonPath("$.gearBox", Matchers.equalTo(vehicleDto.gearBox.toString()))
                 jsonPath("$.wheelDrive", Matchers.equalTo(vehicleDto.wheelDrive.toString()))
             }
@@ -167,7 +162,7 @@ internal class VehicleControllerTest @Autowired constructor(
                 jsonPath("$.regPlate", Matchers.equalTo(vehicleFromDb.regPlate))
                 jsonPath("$.manufacturer", Matchers.equalTo(vehicleFromDb.manufacturer))
                 jsonPath("$.model", Matchers.equalTo(vehicleFromDb.model))
-                jsonPath("$.productionYear", Matchers.equalTo(vehicleFromDb.productionYear?.toInt()))
+                jsonPath("$.productionYear", Matchers.equalTo(vehicleFromDb.productionYear))
                 jsonPath("$.gearBox", Matchers.equalTo(vehicleFromDb.gearBox.toString()))
                 jsonPath("$.wheelDrive", Matchers.equalTo(vehicleFromDb.wheelDrive.toString()))
             }
@@ -185,7 +180,7 @@ internal class VehicleControllerTest @Autowired constructor(
                 jsonPath("$.regPlate", Matchers.equalTo(vehicleFromDb.regPlate))
                 jsonPath("$.manufacturer", Matchers.equalTo(vehicleFromDb.manufacturer))
                 jsonPath("$.model", Matchers.equalTo(vehicleFromDb.model))
-                jsonPath("$.productionYear", Matchers.equalTo(vehicleFromDb.productionYear?.toInt()))
+                jsonPath("$.productionYear", Matchers.equalTo(vehicleFromDb.productionYear))
                 jsonPath("$.gearBox", Matchers.equalTo(vehicleFromDb.gearBox.toString()))
                 jsonPath("$.wheelDrive", Matchers.equalTo(vehicleFromDb.wheelDrive.toString()))
             }
@@ -235,7 +230,7 @@ internal class VehicleControllerTest @Autowired constructor(
                 jsonPath("$.vehicles[0].model", Matchers.equalTo(instructorWithVehicleDto.vehicles[0].model))
                 jsonPath(
                     "$.vehicles[0].productionYear",
-                    Matchers.equalTo(instructorWithVehicleDto.vehicles[0].productionYear?.toInt())
+                    Matchers.equalTo(instructorWithVehicleDto.vehicles[0].productionYear)
                 )
                 jsonPath(
                     "$.vehicles[0].gearBox",
@@ -325,7 +320,7 @@ internal class VehicleControllerTest @Autowired constructor(
                     jsonPath("$.regPlate", Matchers.equalTo(vehicleFromDb.regPlate))
                     jsonPath("$.manufacturer", Matchers.equalTo(vehicleFromDb.manufacturer))
                     jsonPath("$.model", Matchers.equalTo(vehicleFromDb.model))
-                    jsonPath("$.productionYear", Matchers.equalTo(vehicleFromDb.productionYear?.toInt()))
+                    jsonPath("$.productionYear", Matchers.equalTo(vehicleFromDb.productionYear))
                     jsonPath("$.gearBox", Matchers.equalTo(vehicleFromDb.gearBox.toString()))
                     jsonPath("$.wheelDrive", Matchers.equalTo(vehicleFromDb.wheelDrive.toString()))
                 }

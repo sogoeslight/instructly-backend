@@ -20,7 +20,10 @@ class VehicleService(
     private val instructorService: InstructorService,
 ) {
 
-    fun getAll(pageable: Pageable): Page<VehicleDto> = repository.findAll(pageable).map { it.toDto() }
+    fun getAll(pageable: Pageable): Page<VehicleDto> =
+        repository
+            .findAll(pageable)
+            .map(Vehicle::toDto)
 
     @Cacheable(value = ["Vehicle"])
     fun getVehicleByUUID(id: UUID): VehicleDto =
@@ -61,7 +64,7 @@ class VehicleService(
 
 }
 
-fun Vehicle.toDto() = VehicleDto(
+private fun Vehicle.toDto() = VehicleDto(
     id,
     vehicleCategory,
     regPlate,
@@ -72,7 +75,7 @@ fun Vehicle.toDto() = VehicleDto(
     wheelDrive
 )
 
-fun CreateVehicleDto.toDto() = VehicleDto(
+private fun CreateVehicleDto.toDto() = VehicleDto(
     id,
     vehicleCategory,
     regPlate,

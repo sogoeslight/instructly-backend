@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS vehicle
     reg_plate        text CHECK (char_length(reg_plate) > 2 AND char_length(reg_plate) < 16)       NOT NULL,
     manufacturer     text CHECK (char_length(manufacturer) > 2 AND char_length(manufacturer) < 32) NOT NULL,
     model            text CHECK (char_length(model) > 1 AND char_length(model) < 32)               NOT NULL,
-    production_year  smallint CHECK (production_year > 1990 AND
-                                     production_year <= date_part('year', current_date))           NOT NULL,
+    production_year  int CHECK (production_year > 1990 AND
+                                production_year <= date_part('year', current_date) + 1)            NOT NULL,
     gearbox          gearbox                                                                       NOT NULL,
     wheel_drive      wheel_drive                                                                   NOT NULL,
     created_at       timestamp,

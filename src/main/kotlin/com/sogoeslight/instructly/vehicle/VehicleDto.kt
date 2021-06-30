@@ -8,7 +8,7 @@ class VehicleDto(
     val regPlate: String,
     val manufacturer: String,
     val model: String,
-    val productionYear: Short?,
+    val productionYear: Int?,
     val gearBox: Gearbox?,
     val wheelDrive: WheelDrive?
 )
@@ -19,7 +19,7 @@ class CreateVehicleDto(
     val regPlate: String,
     val manufacturer: String,
     val model: String,
-    val productionYear: Short?,
+    val productionYear: Int?,
     val gearBox: Gearbox?,
     val wheelDrive: WheelDrive?
 )

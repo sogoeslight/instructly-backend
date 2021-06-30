@@ -10,10 +10,13 @@
 - [npm](https://www.npmjs.com/get-npm)
 - yarn - (`npm install --global yarn`)
 
-### How to migrate DB
+### Create Docker containers
+- `docker-compose up`
+
+### Migrate DB
 
 - `./gradlew flywayMigrate`
-- Check that all went good `./gradlew flywayInfo`
+- `./gradlew flywayInfo`
 
 ### Run server
 
