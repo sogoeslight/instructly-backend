@@ -58,6 +58,7 @@ dependencies {
     }
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.24")
     testImplementation("org.testcontainers:testcontainers:1.15.1")
+    // implementation(kotlin("script-runtime"))
 }
 
 flyway {

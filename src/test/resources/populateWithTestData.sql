@@ -26,3 +26,5 @@ VALUES ('fd7e1b90-31c2-4d68-b5c3-c96233574534', 'Instructor', 'michaelinstructor
         'Michael', 'Dawkins', 'anotherpath/to/pic', localtimestamp, localtimestamp);
 INSERT INTO instructor
 VALUES ('fd7e1b90-31c2-4d68-b5c3-c96233574534', 'Im an instructor', 'Riga center', ARRAY ['English'], 0, DEFAULT);
+
+SELECT * FROM app_user WHERE email == 'qwe@gma.lv' AND first_name == 'qwe';
